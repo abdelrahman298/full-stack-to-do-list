@@ -14,10 +14,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Prisma } from "@prisma/client";
-import { getAllTodos } from "./actions";
+import { getAllTodoActions } from "./actions";
 
 export default async function Home() {
-  const findtodoData = await getAllTodos();
+  const findtodoData = await getAllTodoActions();
   return (
     <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
@@ -60,7 +60,7 @@ export default async function Home() {
           </form>
         </Dialog>
         <div>
-          {findtodoData.map((todo) => (
+          {findtodoData?.map((todo) => (
             <h1 key={todo.id}>{todo.title}</h1>
           ))}
         </div>
