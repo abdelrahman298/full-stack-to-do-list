@@ -1,3 +1,5 @@
+import { db, todo } from "@/lib/db";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -11,8 +13,11 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Prisma } from "@prisma/client";
+import { getAllTodos } from "./actions";
 
-export default function Home() {
+export default async function Home() {
+  const findtodoData = await getAllTodos();
   return (
     <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
@@ -54,6 +59,11 @@ export default function Home() {
             </DialogContent>
           </form>
         </Dialog>
+        <div>
+          {findtodoData.map((todo) => (
+            <h1 key={todo.id}>{todo.title}</h1>
+          ))}
+        </div>
       </main>
     </div>
   );
