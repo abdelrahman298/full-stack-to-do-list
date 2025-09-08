@@ -28,7 +28,7 @@ export function TodoTable(todoList) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {todoList.todoList.map((todo: Todo) => (
+        {todoList?.todoList.map((todo: Todo) => (
           <TableRow key={todo.id}>
             <TableCell className="font-medium">{todo.id}</TableCell>
             <TableCell>{todo.title}</TableCell>
