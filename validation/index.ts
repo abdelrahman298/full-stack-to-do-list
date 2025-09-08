@@ -13,6 +13,7 @@ export const formSchema = z.object({
       message: "",
     })
     .optional(),
+  completed: z.boolean().optional(),
 });
 
 export type TodoFormSchemaType = z.infer<typeof formSchema>;

@@ -1,21 +1,18 @@
 import AddTodoForm from "@/components/addTodoForm";
+import { TodoTable } from "@/components/todoTable";
+import { getAllTodoActions } from "./actions";
 
-export default function Home() {
-  // const findtodoData = await getAllTodoActions();
-  // const form = useForm();
+export default async function Home() {
+  const todoData = await getAllTodoActions();
 
-  const getFormItem = ({ field }) => {
-    return (
-      <FormItem>
-        <FormLabel>title</FormLabel>
-        <FormControl>
-          <Input placeholder="shadcn" {...field} />
-        </FormControl>
-        <FormDescription>This is your public display name.</FormDescription>
-        <FormMessage />
-      </FormItem>
-    );
-  };
+  console.log("from home " + JSON.stringify(todoData));
 
-  return <AddTodoForm />;
+  return (
+    <>
+      <div className="container mx-auto px-40">
+        <AddTodoForm />
+        <TodoTable todoList={todoData} />
+      </div>
+    </>
+  );
 }

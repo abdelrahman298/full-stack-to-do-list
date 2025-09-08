@@ -9,14 +9,17 @@ export const getAllTodoActions = async () => {
 export const createTodoActions = async ({
   title,
   body,
+  completed,
 }: {
   title: string;
   body: string | undefined;
+  completed: boolean | undefined;
 }) => {
   return prisma.todo.create({
     data: {
       title,
       body,
+      completed,
     },
   });
 };
