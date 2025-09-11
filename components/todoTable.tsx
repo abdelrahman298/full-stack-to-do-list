@@ -1,3 +1,4 @@
+"use client";
 import {
   Table,
   TableBody,
@@ -8,10 +9,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { LucidePenLine, LucideTrash2 } from "lucide-react";
-import { Button } from "./ui/button";
+// import { LucidePenLine, LucideTrash2 } from "lucide-react";
+// import { FaSpinner } from "react-icons/fa";
+
+// import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
-import { Todo } from "@/interfaces";
+import { ITodo } from "@/interfaces";
+// import { deleteTodoActions } from "@/app/actions";
+// import { useState } from "react";
+import ActionsButton from "./actionsButton";
 
 export function TodoTable(todoList) {
   // console.log("from todo " + JSON.stringify(todoList));
@@ -23,15 +29,17 @@ export function TodoTable(todoList) {
         <TableRow>
           <TableHead>ID</TableHead>
           <TableHead>Title</TableHead>
+          <TableHead>body</TableHead>
           <TableHead>Completed</TableHead>
           <TableHead>Actions</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {todoList?.todoList.map((todo: Todo) => (
+        {todoList?.todoList.map((todo: ITodo) => (
           <TableRow key={todo.id}>
             <TableCell className="font-medium">{todo.id}</TableCell>
             <TableCell>{todo.title}</TableCell>
+            <TableCell>{todo.body}</TableCell>
             <TableCell>
               {todo.completed ? (
                 <Badge>completed</Badge>
@@ -39,15 +47,27 @@ export function TodoTable(todoList) {
                 <Badge variant="destructive">uncompleted</Badge>
               )}
             </TableCell>
-            <TableCell className="flex space-x-2 items-center">
+
+            <ActionsButton todo={todo} />
+
+            {/* <TableCell className="flex space-x-2 items-center">
               <Button variant="default" size="icon">
                 <LucidePenLine size={16} />
               </Button>
 
-              <Button variant="destructive" size="icon">
-                <LucideTrash2 size={16} />
+              <Button
+                // onClick={() => deleteTodo(todo.id)}
+                onClick={() => deleteTodo(todo)}
+                variant="destructive"
+                size="icon"
+              >
+                {isLoading ? (
+                  <FaSpinner size={16} />
+                ) : (
+                  <LucideTrash2 size={16} />
+                )}
               </Button>
-            </TableCell>
+            </TableCell> */}
           </TableRow>
         ))}
       </TableBody>

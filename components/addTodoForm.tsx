@@ -23,130 +23,190 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Textarea } from "@/components/ui/textarea";
-import { createTodoActions } from "@/app/actions";
+import { createTodoActions, updateTodoActions } from "@/app/actions";
 import { Checkbox } from "./ui/checkbox";
-const AddTodoForm = () => {
+import { ReactNode, useState } from "react";
+import { ITodo } from "@/interfaces/index";
+interface IProps {
+  modeToggleForm: string;
+  children: ReactNode;
+  todoEdit?: ITodo;
+}
+
+const AddTodoForm = ({ modeToggleForm, children, todoEdit }: IProps) => {
+  const [isOpen, setIsOpen] = useState(false);
   const form = useForm<TodoFormSchemaType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
-      body: "",
-      completed: false,
+      title: modeToggleForm === "Edit" && todoEdit ? todoEdit.title : "",
+      body: modeToggleForm === "Edit" && todoEdit ? todoEdit.body : "",
+      completed:
+        modeToggleForm === "Edit" && todoEdit ? todoEdit.completed : false,
     },
   });
 
-  function onSubmit(values: TodoFormSchemaType) {
+  function onSubmitAddTodo(values: TodoFormSchemaType) {
     createTodoActions({
       title: values.title,
       body: values.body,
       completed: values.completed,
     });
+    form.reset();
+    setIsOpen(false);
+  }
+
+  function onSubmitEditTodo(values: TodoFormSchemaType) {
+    updateTodoActions({
+      id: todoEdit?.id,
+      title: values.title,
+      body: values.body,
+      completed: values.completed,
+    });
+
+    setIsOpen(false);
+    console.log("edit todo" + JSON.stringify(todoEdit));
+    console.log("edit todo to update" + JSON.stringify(values));
   }
 
   return (
-    <div className="font-sans items-center justify-items-center pb-1 gap-16 sm:p-20">
-      <Dialog>
-        <form>
-          <DialogTrigger asChild>
-            <Button size={"lg"} variant="outline">
+    // <div className="font-sans items-center justify-items-center pb-1 gap-16 sm:p-20">
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <form>
+        <DialogTrigger asChild>
+          {/* <Button size={"lg"} variant="outline">
               Add New Note
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
-            <DialogHeader>
-              <DialogTitle>Edit profile</DialogTitle>
-              <DialogDescription>
-                Make changes to your profile here. Click save when you&apos;re
-                done .
-              </DialogDescription>
-            </DialogHeader>
-            <div className="grid gap-4">
-              <div className="grid gap-3">
-                <Form {...form}>
-                  <form
-                    onSubmit={form.handleSubmit(onSubmit)}
-                    className="space-y-8"
-                  >
-                    <FormField
-                      control={form.control}
-                      name="title"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>title</FormLabel>
+            </Button> */}
+          {children}
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>
+              {modeToggleForm == "Add" ? "Add New Todo" : "Edit  Todo"}
+            </DialogTitle>
+            <DialogDescription>
+              Make changes to your profile here. Click save when you&apos;re
+              done .
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4">
+            <div className="grid gap-3">
+              <Form {...form}>
+                <form
+                  onSubmit={
+                    modeToggleForm == "Add"
+                      ? form.handleSubmit(onSubmitAddTodo)
+                      : form.handleSubmit(onSubmitEditTodo)
+                  }
+                  className="space-y-8"
+                >
+                  {/* //! Title  */}
+                  <FormField
+                    control={
+                      form.control
+                      // modeToggleForm == "Add" ? form.control : editForm.control
+                    }
+                    name="title"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>title</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder={
+                              modeToggleForm == "Edit" && todoEdit
+                                ? todoEdit.title
+                                : "write your title here"
+                            }
+                            {...field}
+                            value={
+                              // modeToggleForm == "Edit" && todoEdit
+                              //   ? todoEdit.title
+                              //   : field.value
+                              field.value
+                            }
+                          />
+                        </FormControl>
+                        <FormDescription>
+                          This is your public display name.
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  {/* //! Body  */}
+                  <FormField
+                    control={
+                      form.control
+                      // modeToggleForm == "Add" ? form.control : editForm.control
+                    }
+                    name="body"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Body</FormLabel>
+                        <FormControl>
+                          <Textarea
+                            placeholder={
+                              modeToggleForm == "Edit" && todoEdit
+                                ? todoEdit.title
+                                : "Tell us a little bit about yourself"
+                            }
+                            className="resize-none"
+                            {...field}
+                            value={
+                              // modeToggleForm == "Edit" && todoEdit
+                              //   ? todoEdit.title
+                              //   : field.value
+                              field.value
+                            }
+                          />
+                        </FormControl>
+                        <FormDescription>
+                          You can write your short description here.
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  {/* //! Completed  */}
+                  <FormField
+                    control={
+                      form.control
+                      // modeToggleForm == "Add" ? form.control : editForm.control
+                    }
+                    name="completed"
+                    render={({ field }) => {
+                      return (
+                        <FormItem className="flex flex-row items-center gap-2">
                           <FormControl>
-                            <Input placeholder="shadcn" {...field} />
-                          </FormControl>
-                          <FormDescription>
-                            This is your public display name.
-                          </FormDescription>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="body"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Body</FormLabel>
-                          <FormControl>
-                            <Textarea
-                              placeholder="Tell us a little bit about yourself"
-                              className="resize-none"
-                              {...field}
+                            <Checkbox
+                              // checked={field.value}
+                              checked={
+                                //   Boolean(
+                                //   modeToggleForm === "Edit" && todoEdit
+                                //     ? todoEdit.completed // or whatever property indicates if it's checked
+                                //     : field.value
+                                // )
+                                field.value
+                              }
+                              onCheckedChange={field.onChange}
                             />
                           </FormControl>
-                          <FormDescription>
-                            You can write your short description here.
-                          </FormDescription>
-                          <FormMessage />
+                          <FormLabel className="text-sm font-normal">
+                            Completed
+                          </FormLabel>
                         </FormItem>
-                      )}
-                    />
+                      );
+                    }}
+                  />
 
-                    <FormField
-                      control={form.control}
-                      name="completed"
-                      render={({ field }) => {
-                        return (
-                          <FormItem className="flex flex-row items-center gap-2">
-                            <FormControl>
-                              <Checkbox
-                                checked={field.value}
-                                onCheckedChange={field.onChange}
-                                // checked={field.value}
-                                // onCheckedChange={(checked) => {
-                                //   return checked
-                                //     ? field.onChange([
-                                //         ...field.value,
-                                //         item.id,
-                                //       ])
-                                //     : field.onChange(
-                                //         field.value?.filter(
-                                //           (value) => value !== item.id
-                                //         )
-                                //       );
-                                // }}
-                              />
-                            </FormControl>
-                            <FormLabel className="text-sm font-normal">
-                              Completed
-                            </FormLabel>
-                          </FormItem>
-                        );
-                      }}
-                    />
-
-                    <Button type="submit">Submit</Button>
-                  </form>
-                </Form>
-              </div>
+                  <Button type="submit">Submit</Button>
+                </form>
+              </Form>
             </div>
-          </DialogContent>
-        </form>
-      </Dialog>
-    </div>
+          </div>
+        </DialogContent>
+      </form>
+    </Dialog>
+    // </div>
   );
 };
 

@@ -1,7 +1,7 @@
-export interface Todo {
-  body: string | null;
+export interface ITodo {
+  body: string | undefined;
   title: string;
-  id: string;
-  completed: boolean | null;
-  createdAt: Date | null;
+  id: string | undefined;
+  completed: boolean | undefined;
+  createdAt?: Date;
 }
