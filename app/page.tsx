@@ -7,7 +7,7 @@ import { auth } from "@clerk/nextjs/server";
 export default async function Home() {
   const { userId } = await auth();
   const todoData = await getAllUserTodoActions(userId);
-  console.log("todoData ==> " + userId);
+  console.log("todoData ==> " +JSON.stringify( todoData));
   return (
     <>
       <div className="container mx-auto px-40">

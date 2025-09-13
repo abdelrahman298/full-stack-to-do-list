@@ -5,19 +5,21 @@ import { TableCell } from "./ui/table";
 import { deleteTodoActions } from "@/app/actions";
 import { FaSpinner } from "react-icons/fa";
 import AddTodoForm from "./addTodoForm";
+import { ITodo } from "@/interfaces";
 
-const ActionsButton = ({ todo }) => {
+const ActionsButton = ( {todo} :{todo:ITodo}) => {
   const [isLoading, setIsLoading] = useState(false);
-
+  // console.log("from actions button " + JSON.stringify(todo));
+  
 
   const deleteTodo = async () => {
     setIsLoading(true);
     try {
-      await deleteTodoActions(todo.id);
+      await deleteTodoActions(todo.id as string);
       console.log("Todo deleted successfully");
     } catch (error) {
       // Handle specific error types if needed
-      alert("Failed to delete todo. Please try again.");
+      alert(`Failed to delete todo. Please try again.${error}`);
     } finally {
       setIsLoading(false);
     }

@@ -19,9 +19,9 @@ import { ITodo } from "@/interfaces";
 // import { useState } from "react";
 import ActionsButton from "./actionsButton";
 
-export function TodoTable({todoList}) {
+export function TodoTable({todoList}:{todoList:ITodo[]}) {
   console.log("from todo " + JSON.stringify(todoList));
-  console.log("from todo " +todoList);
+  console.log("from todo table " +todoList);
 
   return (
     <Table>
@@ -76,7 +76,7 @@ export function TodoTable({todoList}) {
         <TableRow>
           <TableCell colSpan={3}>Total</TableCell>
           <TableCell colSpan={2} >
-            {todoList.todoList?.length == 0 ? "" : " there're no TOdo Yet"} 
+            {todoList.length == 0 ? "" : "there're no TOdo Yet"} 
           </TableCell>
         </TableRow>
       </TableFooter>
