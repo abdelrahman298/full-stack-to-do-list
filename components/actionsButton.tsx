@@ -9,7 +9,6 @@ import AddTodoForm from "./addTodoForm";
 const ActionsButton = ({ todo }) => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const openEditForm = () => {};
 
   const deleteTodo = async () => {
     setIsLoading(true);

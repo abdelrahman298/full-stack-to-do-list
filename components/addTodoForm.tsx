@@ -31,9 +31,10 @@ interface IProps {
   modeToggleForm: string;
   children: ReactNode;
   todoEdit?: ITodo;
+  userId?: string | null
 }
 
-const AddTodoForm = ({ modeToggleForm, children, todoEdit }: IProps) => {
+const AddTodoForm = ({ modeToggleForm, children, todoEdit, userId }: IProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const form = useForm<TodoFormSchemaType>({
     resolver: zodResolver(formSchema),
@@ -50,6 +51,7 @@ const AddTodoForm = ({ modeToggleForm, children, todoEdit }: IProps) => {
       title: values.title,
       body: values.body,
       completed: values.completed,
+      userId: userId
     });
     form.reset();
     setIsOpen(false);

@@ -4,8 +4,14 @@ import { ITodo } from "@/interfaces";
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
-export const getAllTodoActions = async () => {
+export const getAllUserTodoActions = async (  userId:string | null
+) => {
+  
   const todos = await prisma.todo.findMany({
+    // where: { userId: userId as string },
+    where:{
+      userId:userId as string
+    },
     orderBy: { createdAt: "desc" },
   });
   return todos;
@@ -15,16 +21,19 @@ export const createTodoActions = async ({
   title,
   body,
   completed,
+  userId,
 }: {
   title: string;
   body: string | undefined;
   completed: boolean | undefined;
+  userId: string | null;
 }) => {
   await prisma.todo.create({
     data: {
       title,
       body,
       completed,
+      userId: userId as string,
     },
   });
   revalidatePath("/");
