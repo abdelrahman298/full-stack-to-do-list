@@ -5,9 +5,9 @@ import { TableCell } from "./ui/table";
 import { deleteTodoActions } from "@/app/actions";
 import { FaSpinner } from "react-icons/fa";
 import AddTodoForm from "./addTodoForm";
-import { ITodo } from "@/interfaces";
+// import { ITodo } from "@/interfaces";
 
-const ActionsButton = ( {todo} :{todo:ITodo}) => {
+const ActionsButton = ( {todo}:any) => {
   const [isLoading, setIsLoading] = useState(false);
   // console.log("from actions button " + JSON.stringify(todo));
   

@@ -1,7 +1,7 @@
 export interface ITodo {
-  body: string  | null;
+  body: string  | null | undefined;
   title: string;
-  id: string | undefined;
+  id?: string | undefined;
   completed: boolean | undefined | null;
   createdAt?: Date  | null;
   userId?: string | null;
