@@ -6,3 +6,10 @@ export interface ITodo {
   createdAt?: Date  | null;
   userId?: string | null;
 }
+export interface ICreateTodo {
+  body: string  | null | undefined;
+  title: string;
+  completed: boolean | undefined | null;
+  createdAt?: Date  | null;
+  userId?: string | null;
+}
