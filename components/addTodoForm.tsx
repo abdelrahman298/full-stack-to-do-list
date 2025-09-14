@@ -30,7 +30,6 @@ interface IProps {
   modeToggleForm: string;
   children: ReactNode;
   todoEdit?: {
-    id?: string;
     title: string;
     body: string | undefined;
     completed: boolean | undefined;

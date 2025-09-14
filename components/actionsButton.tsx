@@ -5,9 +5,9 @@ import { TableCell } from "./ui/table";
 import { deleteTodoActions } from "@/app/actions";
 import { FaSpinner } from "react-icons/fa";
 import AddTodoForm from "./addTodoForm";
-// import { ITodo } from "@/interfaces";
+import { ITodo } from "@/interfaces";
 
-const ActionsButton = ( {todo}:any) => {
+const ActionsButton = ( {todo}:{todo:ITodo}) => {
   const [isLoading, setIsLoading] = useState(false);
   // console.log("from actions button " + JSON.stringify(todo));
   
@@ -32,7 +32,25 @@ const ActionsButton = ( {todo}:any) => {
       </Button> */}
 
       <div className="inline font-sans items-center justify-items-center">
-        <AddTodoForm modeToggleForm="Edit" todoEdit={todo}>
+        {/* <AddTodoForm modeToggleForm="Edit" todoEdit={todo}> */}
+          {/* <AddTodoForm
+          modeToggleForm="Edit"
+          todoEdit={
+            todo.id
+              ? { ...todo, id: todo.id as string }
+              : undefined
+          }
+        /> */}
+        <AddTodoForm modeToggleForm="Edit"  todoEdit={
+            todo.id
+              ? {
+                  ...todo,
+                  id: todo.id as string,
+                  body: todo.body === null ? undefined : todo.body,
+                  completed: todo.completed === null ? undefined : todo.completed,
+                }
+              : undefined
+          }>
           <Button variant="default" size="icon">
             <LucidePenLine size={16} />
           </Button>

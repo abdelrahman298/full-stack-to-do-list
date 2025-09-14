@@ -24,8 +24,8 @@ export const createTodoActions = async ({
   userId,
 }: {
   title: string;
-  body: string | undefined;
-  completed: boolean | undefined;
+  body: string | undefined | null;
+  completed: boolean | undefined | null;
   userId: string | null;
 }) => {
   await prisma.todo.create({
