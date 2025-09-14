@@ -36,7 +36,7 @@ export function TodoTable({todoList}:{todoList:ITodo[]}) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {todoList.map((todo: ITodo) => (
+        {todoList.length?todoList.map((todo: ITodo) => (
           <TableRow key={todo.id}>
             <TableCell className="font-medium">{todo.id}</TableCell>
             <TableCell>{todo.title}</TableCell>
@@ -70,7 +70,7 @@ export function TodoTable({todoList}:{todoList:ITodo[]}) {
               </Button>
             </TableCell> */}
           </TableRow>
-        ))}
+        )):"there're no TOdo Yet"}
       </TableBody>
       <TableFooter className="w-full">
         <TableRow>

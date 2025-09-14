@@ -26,7 +26,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { createTodoActions, updateTodoActions } from "@/app/actions";
 import { Checkbox } from "./ui/checkbox";
 import { ReactNode, useState } from "react";
-import { ITodo } from "@/interfaces/index";
 interface IProps {
   modeToggleForm: string;
   children: ReactNode;
