@@ -26,10 +26,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { createTodoActions, updateTodoActions } from "@/app/actions";
 import { Checkbox } from "./ui/checkbox";
 import { ReactNode, useState } from "react";
+import { ITodo } from "@/interfaces/index";
 interface IProps {
   modeToggleForm: string;
   children: ReactNode;
   todoEdit?: {
+    id: string | undefined;
     title: string;
     body: string | undefined;
     completed: boolean | undefined;
@@ -54,7 +56,7 @@ const AddTodoForm = ({ modeToggleForm, children, todoEdit, userId }: IProps) => 
       title: values.title,
       body: values.body,
       completed: values.completed,
-      userId: userId as string 
+      userId: userId as string | null
     });
     form.reset();
     setIsOpen(false);
