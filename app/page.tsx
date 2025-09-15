@@ -18,7 +18,7 @@ export default async function Home() {
             </Button>
           </AddTodoForm>
         </div>
-        <TodoTable todoList={data} />
+        <TodoTable todoList={data ?? []} />
       </div>
     </>
   );
