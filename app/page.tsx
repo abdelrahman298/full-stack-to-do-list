@@ -6,8 +6,8 @@ import { auth } from "@clerk/nextjs/server";
 
 export default async function Home() {
   const { userId } = await auth();
-  const todoData = await getAllUserTodoActions(userId);
-  console.log("todoData ==> " +JSON.stringify( todoData));
+  const {data} = await getAllUserTodoActions(userId);
+  console.log("todoData ==> " +JSON.stringify(data));
   return (
     <>
       <div className="container mx-auto px-40">
@@ -18,7 +18,7 @@ export default async function Home() {
             </Button>
           </AddTodoForm>
         </div>
-        <TodoTable todoList={todoData} />
+        <TodoTable todoList={data} />
       </div>
     </>
   );

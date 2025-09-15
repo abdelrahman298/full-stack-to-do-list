@@ -76,7 +76,7 @@ export function TodoTable({todoList}:{todoList:ITodo[]}) {
         <TableRow>
           <TableCell colSpan={3}>Total</TableCell>
           <TableCell colSpan={2} >
-            {todoList.length == 0 ? "" : "there're no TOdo Yet"} 
+            {todoList.length == 0 ? "there're no Todo" : ""} 
           </TableCell>
         </TableRow>
       </TableFooter>

@@ -4,17 +4,19 @@ import { ITodo } from "@/interfaces";
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
-export const getAllUserTodoActions = async (  userId:string | null
-) => {
-  
-  const todos = await prisma.todo.findMany({
-    // where: { userId: userId as string },
-    where:{
-      userId:userId as string
-    },
-    orderBy: { createdAt: "desc" },
-  });
-  return todos;
+export const getAllUserTodoActions = async (userId: string | null) => {
+  try {
+    const todos = await prisma.todo.findMany({
+      where: {
+        userId: userId as string,
+      },
+      orderBy: { createdAt: "desc" },
+    });
+    return { success: true, data: todos };
+  } catch (error) {
+    console.error("Error fetching todos:", error);
+    return { success: false, error: error instanceof Error ? error.message : String(error) };
+  }
 };
 
 export const createTodoActions = async ({

@@ -20,7 +20,6 @@ const NavBar = () => {
             className="hidden w-full md:block md:w-auto space-x-2  "
             id="navbar-default "
           >
-
             <SignedOut>
               <SignInButton />
               <SignUpButton>
